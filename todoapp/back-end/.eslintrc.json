@@ -1,3 +1,4 @@
 {
-  "extends": "trybe-backend"
+  "extends": "trybe-backend",
+  "eslint no-underscore-dangle": 0
 }
