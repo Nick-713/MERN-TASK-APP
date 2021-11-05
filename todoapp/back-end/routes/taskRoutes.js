@@ -2,9 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../services/connection');
+const { ObjectId } = require('mongodb');
 
 db.connectToDB(() => {
   if(err) console.error(err);
+
+  const validBody = (req, res, next) => {
+    if('_id' in req.body) {
+      req.body._id = ObjectId(req.body._id);
+    }
+    next();
+  };
 
   // Rota de visualização de tarefas 
   router.get('/list',  async (req, res) => {
