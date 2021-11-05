@@ -11,13 +11,13 @@ db.connectToDB(() => {
   });
   
   // Rota para adicionar tarefas 
-  router.post('/add', (req, res) => {
-    res.send('Chegou na rota de adicionar tarefas...');
+  router.post('/add', async (req, res) => {
+    const response = await db.insertDocuments(req.body)
+    res.send(response);
   });
   
   // Rota de Atualização de tarefas
-  
-  router.patch('/update', (req, res) => {
+  router.patch('/update', async (req, res) => {
     res.send('Chegou na rota de atualizar tarefas...');
   });
   
