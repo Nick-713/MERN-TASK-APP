@@ -1,11 +1,10 @@
 const express = require('express');
+const taskRouter = require('./routes/taskRoutes');
 
 const app = express();
 const PORT = 3000;
 
-app.get('/', (req, res) => {
-  res.send('verificando conexão');
-});
+app.use('/todo', taskRouter);
 
 app.listen(PORT, () => {
   console.log(`App listening at ${PORT}`);
