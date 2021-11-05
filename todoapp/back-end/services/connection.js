@@ -2,24 +2,36 @@ const { MongoClient } = require('mongodb');
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
-const client = new MongoClient(url);
+const client = new MongoClient(url, { useUnifiedTopology: true });
 
 // Database Name
 const dbName = 'to-do-db';
 
-async function main() {
-  // Use connect method to connect to the server
-  await client.connect();
-  console.log('Connected successfully to server');
-  const db = client.db(dbName);
-  const collection = db.collection('documents');
+let _db;
 
-  // the following code examples can be pasted here...
+const connectToDB = (callback) => {
+  client.connect((err) => {
+    console.log('Connected successfully to server');
+    _db = client.db(dbName);
+    return callback(err);
+  });
+};
 
-  return 'done.';
-}
+const findDocuments = async () => {
+  const collection = _db.collection('task');
+  try {
+    const response = await collection.find({}).toArray();
+    return response;
+  } catch (error) {
+    throw new Error(error)
+  }
+};
 
-main()
-  .then(console.log)
-  .catch(console.error)
-  .finally(() => client.close());
+connectToDB(async () => {
+  const r = await findDocuments();
+  console.log(r);
+})
+
+module.exports = {
+  connectToDB,
+};
