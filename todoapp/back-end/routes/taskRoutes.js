@@ -1,7 +1,7 @@
 const express = require('express');
-const db = require('../services/connection');
-
 const router = express.Router();
+
+const db = require('../services/connection');
 
 // Rota de visualização de tarefas 
 router.get('/list', (req, res) => {

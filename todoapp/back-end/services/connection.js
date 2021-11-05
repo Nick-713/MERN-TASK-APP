@@ -27,11 +27,40 @@ const findDocuments = async () => {
   }
 };
 
-connectToDB(async () => {
-  const r = await findDocuments();
-  console.log(r);
-})
+const insertDocuments = async (document) => {
+  const collection = _db.collection('task');
+  try {
+    const response = await collection.insertOne(document);
+    return response;
+  } catch (error) {
+    throw new Error(error)
+  }
+};
+
+const updateDocuments = async (document) => {
+  const collection = _db.collection('task');
+  try {
+    const response = await collection.updateOne({ _id: document._id }, { $set: document });
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const removeDocuments = async (document) => {
+  const collection = _db.collection('task');
+  try {
+    const response = await collection.deleteOne({ _id: document._id });
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 module.exports = {
   connectToDB,
+  findDocuments,
+  insertDocuments,
+  updateDocuments,
+  removeDocuments,
 };
