@@ -4,6 +4,8 @@ const router = express.Router();
 const db = require('../services/connection');
 
 db.connectToDB(() => {
+  if(err) console.error(err);
+
   // Rota de visualização de tarefas 
   router.get('/list',  async (req, res) => {
     const response = await db.findDocuments()
