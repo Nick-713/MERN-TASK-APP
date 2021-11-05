@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../services/connection');
 const { ObjectId } = require('mongodb');
 
-db.connectToDB(() => {
+db.connectToDB((err) => {
   if(err) console.error(err);
 
   const validBody = (req, res, next) => {
