@@ -27,13 +27,15 @@ db.connectToDB(() => {
   });
   
   // Rota de Atualização de tarefas
-  router.patch('/update', async (req, res) => {
-    res.send('Chegou na rota de atualizar tarefas...');
+  router.patch('/update', validBody, async (req, res) => {
+    const response = await db.updateDocuments(req.body)
+    res.send(response);
   });
   
   // Rota de deleta tarefas 
-  router.delete('/delete', (req, res) => {
-    res.send('Chegou na rota de remover tarefa...');
+  router.delete('/delete',validBody, async (req, res) => {
+    const response = await db.removeDocuments(req.body)
+    res.send(response);
   });
 
 });
